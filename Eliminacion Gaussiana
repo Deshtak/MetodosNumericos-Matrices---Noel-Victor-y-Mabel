@@ -1,32 +1,27 @@
-clc; clear;
-a = [3 4 -9 3
-    2 4 -8 0
-    -2 -3 4 -1];
-    
-[m,n]=size(a);
-for j=1:m-1
-    for z=2:m
-        if a(j,j)==0
-            t=a(1,:);a(1,:)=a(z,:);
-            a(z,:)=t;
+% Matlab Program to solve (nxn) system equation 
+% by using Gaussian Elimination method 
+clear ; clc ; close all
+n = input('Ingrese el tamano del sistema de ecuaciones n =   ') ;
+C = input('Ingrese los elementos de la Matrix C ' ) ;
+b = input('Ingrese los elementos de la Matrix b ' ) ;
+dett = det(C)
+if dett == 0
+    print('El sistema no tiene solucion cuando el det(C) = 0 ')
+else
+b = b'
+A = [ C  b ] 
+for j = 1:(n-1)
+        for i= (j+1) : n
+            mult = A(i,j)/A(j,j) ;
+            for k= j:n+1
+                A(i,k) = A(i,k) - mult*A(j,k) ;
+                A
+            end
         end
+end
+for p = n:-1:1
+    for r = p+1:n
+        x(p) = A(p,r)/A(p,r-1)
     end
-    for i=j+1:m
-        a(i,:)=a(i,:)-a(j,:)*(a(i,j)/a(j,j));
-    end
+   end
 end
-
-for j=m:-1:2
-    for i=j-1:-1:1
-        a(i,:)=a(i,:)-a(j,:)*(a(i,j)/a(j,j));
-    end  
-end
-
-for s=1:m
-    a(s,:)=a(s,:)/a(s,s);
- 
-    x(s)=a(s,n);
-end
-disp('Matrix final Gauss-Jordan:');
-a
-x
